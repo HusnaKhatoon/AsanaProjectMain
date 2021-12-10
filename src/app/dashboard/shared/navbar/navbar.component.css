@@ -1,0 +1,27 @@
+/* You can add global styles to this file, and also import other style files */
+.logout {
+    font-size: 22px !important;
+  }
+  
+  .nav-bar {
+    pointer-events: none;
+  }
+  
+  .ng-autocomplete {
+    position: absolute;
+    right: 0rem;
+    margin-top: -10px;
+  }
+  
+  .ng-autocomplete > .autocomplete-container {
+    box-shadow: none !important;
+  }
+  
+  .search {
+    position: relative;
+    left: 36rem;
+    top: 2px;
+    pointer-events: none;
+    z-index: 99;
+  }
+  

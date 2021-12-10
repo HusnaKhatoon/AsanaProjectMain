@@ -37,11 +37,11 @@ export class ControlService {
     return localStorage.getItem("techweirdo_token") !== null;
   }
 
-  // logout() {
-  //   localStorage.removeItem("techweirdo_token");
-  //   localStorage.removeItem("techweirdo_user");
-  //   this.router.navigate(["login"]);
-  // }
+  logout() {
+    localStorage.removeItem("techweirdo_token");
+    localStorage.removeItem("techweirdo_user");
+    this.router.navigate(["login"]);
+  }
 
   // getCount() {
   //   return this._http.get<ResApi>(this.nodeUrl + "projects/get_count");
@@ -115,9 +115,9 @@ export class ControlService {
   //   );
   // }
 
-  // globalSearch() {
-  //   return this._http.get<ResApi>(this.nodeUrl + "projects/global_search");
-  // }
+  globalSearch() {
+    return this._http.get<ResApi>(this.nodeUrl + "projects/global_search");
+  }
 
   // getSubtaskByTaskRunningLate(task) {
   //   return this._http.post<ResApi>(

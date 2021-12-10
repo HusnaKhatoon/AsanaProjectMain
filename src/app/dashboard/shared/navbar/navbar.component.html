@@ -1,0 +1,56 @@
+<p>navbar works!</p>
+<nav
+  class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent"
+>
+  <div class="container-fluid">
+    <!-- current page section -->
+    <div class="navbar-wrapper">
+      <a class="navbar-brand nav-bar">{{ currentPage }}</a>
+    </div>
+
+    <div
+      class="collapse navbar-collapse justify-content-end"
+      id="collapseExample"
+    >
+      <!-- search bar section -->
+      <form>
+        <div class="input-group no-border">
+          <div class="ng-autocomplete">
+            <ng-autocomplete
+              [data]="global_search"
+              [searchKeyword]="keyword"
+              placeHolder="Search for Module, Task or Subtask..."
+              (selected)="selectEvent($event)"
+              historyIdentifier="countries"
+              [itemTemplate]="itemTemplate"
+              [notFoundTemplate]="notFoundTemplate"
+            >
+            </ng-autocomplete>
+
+            <ng-template #itemTemplate let-item>
+              <a [innerHTML]="item.name"></a>
+            </ng-template>
+
+            <ng-template #notFoundTemplate let-notFound>
+              <div [innerHTML]="notFound"></div>
+            </ng-template>
+          </div>
+        </div>
+      </form>
+
+      <!-- logout button -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link">
+            <i class="nc-icon nc-bell-55"></i>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="logout()">
+            <i class="fa fa-sign-out logout"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

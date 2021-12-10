@@ -30,7 +30,10 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes), FormsModule, CommonModule, ReactiveFormsModule],
+  imports: [RouterModule.forRoot(routes),
+     FormsModule,
+      CommonModule, 
+      ReactiveFormsModule],
   exports: [RouterModule],
   declarations: [LoginComponent]
 })
