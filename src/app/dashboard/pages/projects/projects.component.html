@@ -1,1 +1,410 @@
-<p>projects works!</p>
+<!-- list of all projects -->
+<div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Projects</h4>
+          <div class="form-group">
+            <label>Search</label>
+            <input
+              class="form-control"
+              type="text"
+              name="search"
+              autocomplete="off"
+              [(ngModel)]="searchProject"
+            />
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class="text-primary">
+                <!-- <th scope="col">Project Id</th> -->
+                <th scope="col">Project Name</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">End Date</th>
+                <th scope="col">Due Date</th>
+                <th scope="col" style="min-width: 5rem">Edit</th>
+                <th scope="col">View</th>
+                <th scope="col">Sprints</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let project of projects | filter: searchProject">
+                  <!-- <td>{{ project.project_id }}</td> -->
+                  <td>{{ project.project_name }}</td>
+                  <td>
+                    <mat-form-field>
+                      <input
+                        matInput
+                        [matDatepicker]="picker1"
+                        [(ngModel)]="project.start_date"
+                        placeholder=""
+                        [disabled]="isActive[project.project_id]"
+                        (dateChange)="
+                          getTheDate(project.project_id, $event.target.value)
+                        "
+                      />
+                      <mat-datepicker-toggle
+                        matSuffix
+                        [for]="picker1"
+                      ></mat-datepicker-toggle>
+                      <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                  </td>
+                  <td>
+                    <mat-form-field>
+                      <input
+                        matInput
+                        [matDatepicker]="picker2"
+                        placeholder=""
+                        [(ngModel)]="project.end_date"
+                        [disabled]="isActive[project.project_id]"
+                        (dateChange)="
+                          getTheDate(project.project_id, $event.target.value)
+                        "
+                      />
+                      <mat-datepicker-toggle
+                        matSuffix
+                        [for]="picker2"
+                      ></mat-datepicker-toggle>
+                      <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+                  </td>
+                  <td>
+                    <mat-form-field>
+                      <input
+                        matInput
+                        [matDatepicker]="picker3"
+                        placeholder=""
+                        [(ngModel)]="project.due_date"
+                        [disabled]="isActive[project.project_id]"
+                        (dateChange)="
+                          getTheDate(project.project_id, $event.target.value)
+                        "
+                      />
+                      <mat-datepicker-toggle
+                        matSuffix
+                        [for]="picker3"
+                      ></mat-datepicker-toggle>
+                      <mat-datepicker #picker3></mat-datepicker>
+                    </mat-form-field>
+                  </td>
+                  <td>
+                    <button
+                      *ngIf="isActive[project.project_id]"
+                      class="btn btn-sm btn-outline-success btn-round btn-icon"
+                      (click)="editPrivilege(project.project_id, 'edit')"
+                    >
+                      <i class="fa fa-pencil"></i>
+                    </button>
+                    <button
+                      *ngIf="!isActive[project.project_id]"
+                      class="btn btn-sm btn-outline-success btn-round btn-icon"
+                      (click)="
+                        updateProject({
+                          project_id: project.project_id,
+                          start_date: project.start_date,
+                          due_date: project.due_date,
+                          end_date: project.end_date
+                        })
+                      "
+                    >
+                      <i class="fa fa fa-check"></i>
+                    </button>
+  
+                    <button
+                      style="margin-left: 5px"
+                      *ngIf="!isActive[project.project_id]"
+                      class="btn btn-sm btn-outline-danger btn-round btn-icon"
+                      (click)="editPrivilege(project.project_id, 'cancel')"
+                    >
+                      <i class="fa fa-times"></i>
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      class="btn btn-sm btn-outline-success btn-round btn-icon"
+                      (click)="showProjectData(project)"
+                    >
+                      <i class="fa fa-external-link"></i>
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      class="btn btn-sm btn-outline-primary btn-round btn-icon"
+                      (click)="goToSprints(project)"
+                    >
+                      <i class="fa fa-th-list"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- line chart for selected project -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Projects Line Chart</h4>
+        </div>
+        <div class="card-body">
+          <div id="chart-project"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- bar graph of module and resources -->
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card side-cards">
+        <div class="card-header">
+          <h4 class="card-title">Module</h4>
+        </div>
+        <div class="card-body">
+          <div id="chart-module"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card side-cards">
+        <div class="card-header">
+          <h4 class="card-title">Resources</h4>
+        </div>
+        <div class="card-body">
+          <div id="chart-resource"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- list of all resources in selected project -->
+  <div class="row">
+    <div class="card side-card top-card" *ngIf="selected_resources.length">
+      <div class="card-header">
+        <h4 class="card-title">Resources</h4>
+      </div>
+      <div class="card-body">
+        <div class="noScroll">
+          <!-- chip -->
+          <div class="chip" *ngFor="let resources of selected_resources">
+            {{ resources.name }} ->
+            <b style="color: #da5d44; font-weight: 600">{{
+              resources.resource_level
+            }}</b>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- task and details section in selected project -->
+  <div class="row">
+    <!-- list of all tasks -->
+    <div class="col-md-9">
+      <div class="card" *ngIf="selected_tasks.length">
+        <div class="card-header">
+          <h4 class="card-title">{{ selected_tasks[0].project_name }} Tasks</h4>
+          <div class="form-group">
+            <label>Search</label>
+            <input
+              class="form-control"
+              type="text"
+              name="search"
+              autocomplete="off"
+              [(ngModel)]="searchTask"
+            />
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="table table-responsive table-height">
+            <table class="table">
+              <thead class="text-primary">
+                <th scope="col">Task</th>
+                <th scope="col">Module</th>
+                <th scope="col">Assignee</th>
+                <th scope="col">Created At</th>
+                <th scope="col">Completed At</th>
+                <th scope="col">Due On</th>
+                <th scope="col">Status</th>
+                <th scope="col">SP</th>
+                <th scope="col">Subtasks</th>
+                <th scope="col">Status Report</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let task of selected_tasks | filter: searchTask">
+                  <td>{{ task.task_name }}</td>
+                  <td>{{ task.module }}</td>
+                  <td>{{ task.assignee }}</td>
+                  <td>{{ task.created_at | date: "dd MMM yy hh:mm a" }}</td>
+                  <td>{{ task.completed_at | date: "dd MMM yy hh:mm a" }}</td>
+                  <td>{{ task.due_on | date: "dd MMM yy hh:mm a" }}</td>
+                  <td *ngIf="task.status == 'Early'" style="color: green">
+                    {{ task.status }}
+                  </td>
+                  <td *ngIf="task.status == 'Late'" style="color: red">
+                    {{ task.status }}
+                  </td>
+                  <td
+                    *ngIf="task.status == 'Running Late'"
+                    style="color: #da5d44"
+                  >
+                    {{ task.status }}
+                  </td>
+                  <td *ngIf="task.status == 'Running'" style="color: #51cbce">
+                    {{ task.status }}
+                  </td>
+                  <td>{{ task.story_point }}</td>
+                  <td>
+                    <button
+                      class="btn btn-sm btn-outline-success btn-round btn-icon"
+                      (click)="showSelectedSubtask(task)"
+                    >
+                      <i class="fa fa-external-link"></i>
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      class="btn btn-sm btn-outline-warning btn-round btn-icon"
+                      (click)="statusSubtask(task)"
+                    >
+                      <i class="fa fa-external-link"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- details -->
+    <div class="col-md-3">
+      <div class="row">
+        <!-- details section  -->
+        <div class="card side-card" *ngIf="selected_tasks.length">
+          <div class="card-header">
+            <h4 class="card-title">Details</h4>
+          </div>
+          <div class="card-body card-height">
+            <div class="details">
+              <div>Project Story Point:</div>
+              <div>{{ sp }}</div>
+            </div>
+            <h4 class="card-title">Modules</h4>
+            <div class="details" *ngFor="let module of modules">
+              <div>{{ module.module }}</div>
+              <div>{{ module.story_point }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- list of all subtasks in selected task-->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card" *ngIf="selected_subtasks.length">
+        <div class="card-header">
+          <h4 class="card-title">Subtasks</h4>
+          <div class="form-group">
+            <label>Search</label>
+            <input
+              class="form-control"
+              type="text"
+              name="search"
+              autocomplete="off"
+              [(ngModel)]="searchSubtask"
+            />
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class="text-primary">
+                <th scope="col">Subtask Task</th>
+                <th scope="col">Assignee</th>
+                <th scope="col">Created At</th>
+                <th scope="col">Completed At</th>
+                <th scope="col">Due On</th>
+                <th scope="col">Project Name</th>
+                <th scope="col">SP</th>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let task of selected_subtasks | filter: searchSubtask"
+                >
+                  <td>{{ task.subtask_name }}</td>
+                  <td>{{ task.assignee }}</td>
+                  <td>{{ task.created_at | date: "dd MMM yy hh:mm a" }}</td>
+                  <td>{{ task.completed_at | date: "dd MMM yy hh:mm a" }}</td>
+                  <td>{{ task.due_on | date: "dd MMM yy hh:mm a" }}</td>
+                  <td>{{ task.project_name }}</td>
+                  <td>{{ task.story_point }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- list of all running late/late subtask in selected task-->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card" *ngIf="selected_subtaskLate.length">
+        <div class="card-header">
+          <h4 class="card-title">Subtasks Running Late or Still Running</h4>
+          <div class="form-group">
+            <label>Search</label>
+            <input
+              class="form-control"
+              type="text"
+              name="search"
+              autocomplete="off"
+              [(ngModel)]="searchSubtask"
+            />
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class="text-primary">
+                <th scope="col">Subtask Task</th>
+                <th scope="col">Assignee</th>
+                <th scope="col">Created At</th>
+                <th scope="col">Completed At</th>
+                <th scope="col">Due At</th>
+                <th scope="col">Project Name</th>
+                <th scope="col">SP</th>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="
+                    let task of selected_subtaskLate | filter: searchSubtaskLate
+                  "
+                >
+                  <td>{{ task.subtask_name }}</td>
+                  <td>{{ task.assignee }}</td>
+                  <td>{{ task.created_at | date: "dd MMM yy hh:mm a" }}</td>
+                  <td>{{ task.completed_at | date: "dd MMM yy hh:mm a" }}</td>
+                  <td>{{ task.due_on | date: "dd MMM yy hh:mm a" }}</td>
+                  <td>{{ task.project_name }}</td>
+                  <td>{{ task.story_point }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

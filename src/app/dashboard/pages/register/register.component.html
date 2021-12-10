@@ -1,1 +1,232 @@
-<p>register works!</p>
+<!-- create project -->
+<div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Create Project</h4>
+          <div class="card-body">
+            <div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Project ID</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter Project ID"
+                      [(ngModel)]="createProject.project_id"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Workspace ID</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter Workspace ID"
+                      [(ngModel)]="createProject.workspace_id"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Project Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter Project Name"
+                      [(ngModel)]="createProject.project_name"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="update ml-auto mr-auto">
+                  <button
+                    type="submit"
+                    (click)="onCreateProject()"
+                    class="btn btn-primary btn-round"
+                  >
+                    Create Project
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- list of all projects -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Projects</h4>
+          <div class="form-group">
+            <label>Search</label>
+            <input
+              class="form-control"
+              type="text"
+              name="search"
+              autocomplete="off"
+              [(ngModel)]="searchProject"
+            />
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class="text-primary">
+                <!-- <th scope="col">Project Id</th> -->
+                <th scope="col">Project Name</th>
+                <th scope="col">Registered</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">End Date</th>
+                <th scope="col">Due Date</th>
+                <th scope="col" style="min-width: 5rem">Edit</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let project of projects | filter: searchProject">
+                  <!-- <td>{{ project.project_id }}</td> -->
+                  <td>{{ project.project_name }}</td>
+                  <td>
+                    {{ project.is_registered == 0 ? "Not Yet" : "Yes" }}
+                  </td>
+                  <td>
+                    <mat-form-field>
+                      <input
+                        matInput
+                        [matDatepicker]="picker1"
+                        [(ngModel)]="project.start_date"
+                        placeholder="Start Date"
+                        [disabled]="isActive[project.project_id]"
+                        (dateChange)="
+                          getTheDate(project.project_id, $event.target.value)
+                        "
+                      />
+                      <mat-datepicker-toggle
+                        matSuffix
+                        [for]="picker1"
+                      ></mat-datepicker-toggle>
+                      <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                  </td>
+                  <td>
+                    <mat-form-field>
+                      <input
+                        matInput
+                        [matDatepicker]="picker2"
+                        placeholder="End Date"
+                        [(ngModel)]="project.end_date"
+                        [disabled]="isActive[project.project_id]"
+                        (dateChange)="
+                          getTheDate(project.project_id, $event.target.value)
+                        "
+                      />
+                      <mat-datepicker-toggle
+                        matSuffix
+                        [for]="picker2"
+                      ></mat-datepicker-toggle>
+                      <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+                  </td>
+                  <td>
+                    <mat-form-field>
+                      <input
+                        matInput
+                        [matDatepicker]="picker3"
+                        placeholder="Due Date"
+                        [(ngModel)]="project.due_date"
+                        [disabled]="isActive[project.project_id]"
+                        (dateChange)="
+                          getTheDate(project.project_id, $event.target.value)
+                        "
+                      />
+                      <mat-datepicker-toggle
+                        matSuffix
+                        [for]="picker3"
+                      ></mat-datepicker-toggle>
+                      <mat-datepicker #picker3></mat-datepicker>
+                    </mat-form-field>
+                  </td>
+                  <td>
+                    <button
+                      *ngIf="isActive[project.project_id]"
+                      class="btn btn-sm btn-outline-success btn-round btn-icon"
+                      (click)="editPrivilege(project.project_id, 'edit')"
+                    >
+                      <i class="fa fa-pencil"></i>
+                    </button>
+                    <button
+                      *ngIf="!isActive[project.project_id]"
+                      class="btn btn-sm btn-outline-success btn-round btn-icon"
+                      (click)="
+                        updateProject({
+                          project_id: project.project_id,
+                          start_date: project.start_date,
+                          due_date: project.due_date,
+                          end_date: project.end_date
+                        })
+                      "
+                    >
+                      <i class="fa fa fa-check"></i>
+                    </button>
+  
+                    <button
+                      style="margin-left: 5px"
+                      *ngIf="!isActive[project.project_id]"
+                      class="btn btn-sm btn-outline-danger btn-round btn-icon"
+                      (click)="editPrivilege(project.project_id, 'cancel')"
+                    >
+                      <i class="fa fa-times"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- register project -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Register Project</h4>
+          <div class="card-body">
+            <form #register="ngForm" (ngSubmit)="onRegisterProject(register)">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Project ID</label>
+                    <select name="project_id" id="" ngModel class="form-control">
+                      <option
+                        [value]="project.project_id"
+                        *ngFor="let project of unRegProjects"
+                      >
+                        {{ project.project_name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="update ml-auto mr-auto">
+                  <button type="submit" class="btn btn-primary btn-round">
+                    Register Project
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

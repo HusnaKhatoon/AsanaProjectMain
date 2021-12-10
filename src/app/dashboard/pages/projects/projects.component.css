@@ -1,0 +1,74 @@
+.table-responsive {
+    max-height: 20rem;
+  }
+  
+  .chip {
+    display: inline-block;
+    padding: 0 15px;
+    height: 50px;
+    font-size: 10px;
+    line-height: 50px;
+    border-radius: 25px;
+    background-color: #6bd098;
+    color: white;
+    margin-bottom: 5px;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin-right: 5px;
+  }
+  
+  .noScroll {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 7.5rem;
+    margin-top: 0;
+    overflow: auto;
+  }
+  
+  .noScroll::-webkit-scrollbar {
+    width: 0 !important;
+  }
+  
+  .side-cards {
+    overflow: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+  
+  .side-card {
+    width: 98%;
+    overflow: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+  
+  .side-card::-webkit-scrollbar {
+    width: 0 !important;
+  }
+  
+  .card-height {
+    height: 27.2rem;
+  }
+  
+  .top-card {
+    min-height: 5rem;
+    margin-left: 15px;
+  }
+  
+  .details {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-gap: 2rem;
+    margin: 0 0 3em 1em;
+  }
+  
+  .table-height {
+    min-height: 20rem;
+  }
+  

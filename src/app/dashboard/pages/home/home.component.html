@@ -1,1 +1,172 @@
-<p>home works!</p>
+<!-- <p>home works!</p> -->
+<!-- top card sections -->
+<div class="row">
+    <div class="col-lg-3 col-md-6 col-sm-6">
+      <div class="card card-stats">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-5 col-md-4">
+              <div class="icon-big text-center icon-warning">
+                <i class="nc-icon nc-layout-11 text-warning"></i>
+              </div>
+            </div>
+            <div class="col-7 col-md-8">
+              <div class="numbers">
+                <p class="card-category">Projects</p>
+                <p class="card-title">{{ projects }}</p>
+                <p></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <hr />
+          <div class="stats point"><i class="fa fa-refresh"></i> Update Now</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+      <div class="card card-stats">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-5 col-md-4">
+              <div class="icon-big text-center icon-warning">
+                <i class="nc-icon nc-single-02 text-success"></i>
+              </div>
+            </div>
+            <div class="col-7 col-md-8">
+              <div class="numbers">
+                <p class="card-category">Resources</p>
+                <p class="card-title">{{ resources }}</p>
+                <p></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <hr />
+          <div class="stats point"><i class="fa fa-refresh"></i> Update Now</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+      <div class="card card-stats">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-5 col-md-4">
+              <div class="icon-big text-center icon-warning">
+                <i class="nc-icon nc-ruler-pencil text-danger"></i>
+              </div>
+            </div>
+            <div class="col-7 col-md-8">
+              <div class="numbers">
+                <p class="card-category">Tasks</p>
+                <p class="card-title">{{ tasks }}</p>
+                <p></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <hr />
+          <div class="stats point"><i class="fa fa-refresh"></i> Update Now</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+      <div class="card card-stats">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-5 col-md-4">
+              <div class="icon-big text-center icon-warning">
+                <i class="nc-icon nc-bullet-list-67 text-primary"></i>
+              </div>
+            </div>
+            <div class="col-7 col-md-8">
+              <div class="numbers">
+                <p class="card-category">Subtasks</p>
+                <p class="card-title">{{ subtasks }}</p>
+                <p></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <hr />
+          <div class="stats point"><i class="fa fa-refresh"></i> Update Now</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- heatmap and statistics section -->
+  <div class="row">
+    <!-- heatmap section -->
+    <div class="col-md-9"> 
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title">Timeline Chart</h5>
+          <div class="card-category">
+            <input
+              class="form-control"
+              type="text"
+              ngxDaterangepickerMd
+              [(ngModel)]="selected"
+              placeholder="Choose Date..."
+              (change)="changeDate($event)"
+            />
+          </div>
+        </div>
+        <div class="card-body">
+          <div id="chart"></div>
+        </div>
+        <div class="card-footer">
+          <hr />
+          <div class="stats point">
+            <i class="fa fa-history"></i> Updated 3 minutes ago
+          </div>
+        </div>
+      </div>
+    </div> 
+  
+    <!-- statistics section -->
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title">Resource</h5>
+          <p class="card-category"></p>
+        </div>
+        <div class="card-body name-card">
+          <div *ngFor="let user of user_resources">
+            <button
+              type="submit"
+              (click)="statusResources(user.resource_id, user.name)"
+              class="btn btn-primary btn-round"
+            >
+              {{ user.name }}
+            </button>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="legend"></div>
+          <hr />
+          <div class="stats point"><i class="fa fa-refresh"></i> Update Now</div>
+        </div>
+      </div>
+    </div> 
+  </div>
+  
+  <!-- bar graph of resources based on all projects-->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card side-card top-card">
+        <div class="card-header">
+          <h4 class="card-title" *ngIf="name">{{ name }}</h4>
+        </div>
+        <div class="card-body">
+          <div id="chart-resource"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

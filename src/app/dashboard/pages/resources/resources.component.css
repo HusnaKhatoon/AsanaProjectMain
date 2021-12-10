@@ -1,0 +1,71 @@
+.card-user {
+    height: 96%;
+  }
+  
+  .author {
+    margin-top: -110px;
+  }
+  
+  .title {
+    margin-top: -12px;
+  }
+  
+  a {
+    text-decoration: none;
+  }
+  
+  td {
+    padding: 0.75rem !important;
+  }
+  
+  .chip {
+    display: inline-block;
+    padding: 0 15px;
+    height: 50px;
+    font-size: 10px;
+    line-height: 50px;
+    border-radius: 25px;
+    background-color: #6bd098;
+    color: white;
+    margin-bottom: 5px;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin-right: 5px;
+  }
+  
+  .noScroll {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-height: 10rem;
+    margin-top: 0;
+    overflow: auto;
+  }
+  
+  .noScroll::-webkit-scrollbar {
+    width: 0 !important;
+  }
+  
+  .card-footer {
+    height: 35%;
+  }
+  
+  .card-user hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .hide-button {
+    background-color: transparent;
+    border: none;
+  }
+  
+  .hide-button i {
+    color: #6bd098;
+  }
+  
+  .modal {
+    display: block;
+  }
+  
