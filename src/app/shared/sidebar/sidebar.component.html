@@ -1,0 +1,49 @@
+<!-- <p>sidebar works!</p> -->
+<div class="sidebar-wrapper">
+    <div class="logo" (click)="routeChange()">
+      <a routerLink="home" class="simple-text logo-mini">
+        <div class="logo-image-small">
+          <img src="assets/img/angular2-logo-white.png" />
+        </div>
+      </a>
+      <a routerLink="home" class="simple-text logo-normal">{{ currentUser }}</a>
+    </div>
+    <ul class="nav">
+      <li class="home active" (click)="routeChange()">
+        <a routerLink="home">
+          <i class="nc-icon nc-bank"></i>
+          <p>Home</p>
+        </a>
+      </li>
+      <li class="projects" (click)="routeChange()">
+        <a routerLink="projects">
+          <i class="nc-icon nc-layout-11"></i>
+          <p>projects</p>
+        </a>
+      </li>
+      <!-- <li class="notification" (click)="routeChange()">
+        <a routerLink="notification">
+          <i class="nc-icon nc-bell-55"></i>
+          <p>Notifications</p>
+        </a>
+      </li> -->
+      <li class="register" (click)="routeChange()">
+        <a routerLink="register">
+          <i class="nc-icon nc-briefcase-24"></i>
+          <p>Register</p>
+        </a>
+      </li>
+      <li class="resources" (click)="routeChange()">
+        <a routerLink="resources">
+          <i class="nc-icon nc-single-02"></i>
+          <p>Resources</p>
+        </a>
+      </li>
+      <li class="resources">
+        <a routerLink="resources">
+          <i class="nc-icon nc-single-02"></i>
+          <p>Resources</p>
+        </a>
+      </li>
+    </ul>
+  </div>

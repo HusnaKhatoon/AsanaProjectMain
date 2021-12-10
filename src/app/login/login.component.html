@@ -1,0 +1,73 @@
+<div class="limiter">
+  <div class="container-login100">
+    <div class="wrap-login100 card">
+      <div
+        class="login100-form-title"
+        style="background-image: url(../../assets/img/bg-01.jpg)"
+      >
+        <span class="login100-form-title-1"> Techweirdo Consultancy </span>
+      </div>
+
+      <form
+        class="login100-form"
+        [formGroup]="formdata"
+        (ngSubmit)="onSubmit()"
+      >
+        <div class="wrap-input100 m-b-26">
+          <span class="label-input100">Email</span>
+          <input
+            class="input100"
+            type="text"
+            name="email"
+            placeholder="Enter username"
+            formControlName="email"
+          />
+          <span class="focus-input100"></span>
+        </div>
+        <!-- <div
+          class="msg"
+          *ngIf="(email.dirty || email.touched) && email.errors?.required"
+        >
+          I need an email to let you in...
+        </div>
+        <div
+          class="msg"
+          *ngIf="(email.dirty || email.touched) && email.errors?.email"
+        >
+          I need a valid email...
+        </div> -->
+        <div class="wrap-input100 m-b-18">
+          <span class="label-input100">Password</span>
+          <input
+            class="input100"
+            type="password"
+            name="pass"
+            placeholder="Enter password"
+            formControlName="password"
+          />
+          <span class="focus-input100"></span>
+        </div>
+        <!-- <div
+          class="msg"
+          *ngIf="
+            (password.dirty || password.touched) && password.errors?.required
+          "
+        >
+          Password is also required...
+        </div> -->
+
+        <div class="flex-sb-m w-full p-b-30">
+          <div class="contact100-form-checkbox"></div>
+
+          <div>
+            <a href="#" class="txt1"> Forgot Password? </a>
+          </div>
+        </div>
+
+        <div class="container-login100-form-btn">
+          <button class="login100-form-btn" type="submit">Login</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
